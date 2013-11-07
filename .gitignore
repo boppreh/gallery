@@ -3,6 +3,7 @@
 #################
 
 configuration.json
+cache/*
 
 *.pydevproject
 .project
