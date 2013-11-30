@@ -10,7 +10,10 @@ def navigate(url, match, session):
 
 def show(url, match, session):
     full_url = urljoin(url, match)
-    #webbrowser.open(full_url)
+    webbrowser.open(full_url)
+
+def download(url, match, session):
+    full_url = urljoin(url, match)
     with open(path.join('cache', path.basename(full_url)), 'wb') as f:
         request = session.get(full_url, stream=True)
 
@@ -20,6 +23,14 @@ def show(url, match, session):
 
             f.write(block)
 
+def save(url, match, session):
+    filename = path.join('cache', 'saved_text.txt')
+    with open(filename, 'a', encoding='utf-8') as f:
+        f.write(match)
+
+def echo(url, match, session):
+    print(match)
+
 
 def run(root, rules, session):
     queue = [root]
@@ -27,16 +38,16 @@ def run(root, rules, session):
 
     while queue:
         url = queue.pop(0)
+        if url in processed:
+            continue
         processed.add(url)
         page = session.get(url).text
 
         for regex, function in rules.items():
             for match in regex.findall(page):
-                result = function(url, match, session)
-                if result:
-                    for url in result:
-                        if url not in processed:
-                            queue.append(url)
+                print(url, function)
+                result = function(url, match, session) or []
+                queue.extend(result)
 
 if __name__ == '__main__':
     import json
