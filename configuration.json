@@ -5,5 +5,9 @@
         "href=\"([^\"]+?)\"": "navigate",
 
         "href=\"([^\"]+?\\.gz)\"": "echo"
-    }
+    },
+
+    "Remove the 'example_' from the keys below to enable authentication": "",
+    "example_login_url": "https://example.org/authenticate.php",
+    "example_login_data": "username=MyName&password=MyPassword"
 }
