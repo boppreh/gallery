@@ -43,20 +43,27 @@ def run(root, rules, session):
         processed.add(url)
         page = session.get(url).text
 
-        for regex, function in rules.items():
+        for regex, functions in rules.items():
             for match in regex.findall(page):
-                result = function(url, match, session) or []
-                queue.extend(result)
+                for function in functions:
+                    result = function(url, match, session) or []
+                    queue.extend(result)
 
 if __name__ == '__main__':
     import json
+    from collections import defaultdict
+
     config = json.load(open('configuration.json'))
 
     root = config['root']
     str_rules = config['rules']
-    rules = {}
+    rules = defaultdict(list)
     for key, value in str_rules.items():
-        rules[re.compile(key)] = globals()[value]
+        if type(value) == str:
+            value = [value]
+
+        for function_name in value:
+            rules[re.compile(key)].append(globals()[function_name])
 
     session = Session()
 
