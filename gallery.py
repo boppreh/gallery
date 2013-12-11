@@ -8,8 +8,7 @@ from requests import Session
 from os import path
 
 def navigate(url, match, session):
-	new_url = urljoin(url, match)
-	return [new_url]
+	return [urljoin(url, match)]
 
 def show(url, match, session):
     full_url = urljoin(url, match)
@@ -33,6 +32,9 @@ def save(url, match, session):
 
 def echo(url, match, session):
     print(match)
+
+def echo_url(url, match, session):
+    print(urljoin(url, match))
 
 
 def run(root, rules, session):
