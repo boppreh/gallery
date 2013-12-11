@@ -45,7 +45,6 @@ def run(root, rules, session):
 
         for regex, function in rules.items():
             for match in regex.findall(page):
-                print(url, function)
                 result = function(url, match, session) or []
                 queue.extend(result)
 
@@ -61,7 +60,7 @@ if __name__ == '__main__':
 
     session = Session()
 
-    if config['login_url']:
+    if 'login_url' in config:
         login_data = config['login_data']
         r = session.post(config['login_url'], data=login_data)
 
