@@ -59,11 +59,15 @@ if __name__ == '__main__':
     str_rules = config['rules']
     rules = defaultdict(list)
     for key, value in str_rules.items():
+        compiled_key = re.compile(key)
+
         if type(value) == str:
             value = [value]
-
-        for function_name in value:
-            rules[re.compile(key)].append(globals()[function_name])
+            rules[compiled_key].append(value)
+        else:      
+            for function_name in value:
+                function = globals()[function_name]
+                rules[compiled_key].append(function)
 
     session = Session()
 
