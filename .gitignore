@@ -2,7 +2,6 @@
 ## Eclipse
 #################
 
-configuration.json
 cache/*
 
 *.pydevproject

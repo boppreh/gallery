@@ -1,0 +1,9 @@
+{
+    "root": "http://espelhos.edugraf.ufsc.br/ubuntu/",
+
+    "rules": {
+        "href=\"([^\"]+?)\"": "navigate",
+
+        "href=\"([^\"]+?\\.gz)\"": "echo"
+    }
+}
