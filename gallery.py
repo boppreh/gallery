@@ -46,7 +46,10 @@ def run(root, rules, session):
         if url in processed:
             continue
         processed.add(url)
-        page = session.get(url).text
+        try:
+            page = session.get(url).text
+        except Exception:
+            print('Failed to load url {}, ignoring.'.format(url))
 
         for regex, functions in rules.items():
             for match in regex.findall(page):
