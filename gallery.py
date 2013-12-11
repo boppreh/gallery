@@ -1,6 +1,9 @@
 import re
 import webbrowser
-from urllib.parse import urljoin
+try:
+    from urllib.parse import urljoin
+except ImportError:
+    from urlparse import urljoin
 from requests import Session
 from os import path
 
@@ -61,13 +64,12 @@ if __name__ == '__main__':
     for key, value in str_rules.items():
         compiled_key = re.compile(key)
 
-        if type(value) == str:
+        if type(value) != list:
             value = [value]
-            rules[compiled_key].append(value)
-        else:      
-            for function_name in value:
-                function = globals()[function_name]
-                rules[compiled_key].append(function)
+
+        for function_name in value:
+            function = globals()[function_name]
+            rules[compiled_key].append(function)
 
     session = Session()
 
